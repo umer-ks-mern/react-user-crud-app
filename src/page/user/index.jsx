@@ -72,9 +72,7 @@ const UserWrapper = () => {
   };
 
   const deleteOne = (id) => {
-    const indexToDelete = users.findIndex(
-      (user) => user.id === id
-    );
+    const indexToDelete = users.findIndex((user) => user.id === id);
     users.splice(indexToDelete, 1);
     const updatedUsers = [...users];
     localStorage.setItem("users", JSON.stringify(updatedUsers));
@@ -82,23 +80,18 @@ const UserWrapper = () => {
   };
 
   const findUser = (id) => {
-    const indexToFind = users.findIndex(
-      (user) => user.id === id
-    );
-    if(indexToFind!==-1)
-      return users[indexToFind];
+    const indexToFind = users.findIndex((user) => user.id === id);
+    if (indexToFind !== -1) return users[indexToFind];
     return null;
-  }
-  
+  };
+
   const updateUser = (userToBeUpdated) => {
     const indexToUpdate = users.findIndex(
       (user) => user.id === userToBeUpdated.id
     );
 
     if (indexToUpdate !== -1) {
-      users[indexToUpdate].name = userToBeUpdated.name;
-      users[indexToUpdate].age = userToBeUpdated.age;
-      users[indexToUpdate].email = userToBeUpdated.email;
+      users[indexToUpdate] = userToBeUpdated;
       const updatedUsers = [...users];
 
       localStorage.setItem("users", JSON.stringify(updatedUsers));

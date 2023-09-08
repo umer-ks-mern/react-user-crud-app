@@ -23,12 +23,7 @@ const CreateUser = ({ onUpdateUser, findUser }) => {
     } else alert("User Not Found");
   };
   const updateClick = () => {
-    if (
-      userData.name === "" ||
-      userData.id === "" ||
-      isNaN(userData.age) ||
-      userData.email === ""
-    ) {
+    if (userData.name === "" || isNaN(userData.age) || userData.email === "") {
       alert("All Feilds are Required!!");
       return;
     }
@@ -50,16 +45,6 @@ const CreateUser = ({ onUpdateUser, findUser }) => {
       </div>
       <div className="form-container">
         <div className="form-card">
-          <label htmlFor="id">ID:</label>
-          <input
-            onChange={(e) => {
-              setuserData({ ...userData, id: e.target.value });
-            }}
-            type="text"
-            id="userId"
-            name="name"
-            value={userData.id}
-          />
           <label htmlFor="name">Name:</label>
           <input
             onChange={(e) => {
