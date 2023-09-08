@@ -103,7 +103,16 @@ const UserWrapper = () => {
   const layoutRoutes = [
     {
       path: "/",
-      element: <h1>Home</h1>,
+      element: (
+        <>
+          <div className="header-container">
+            <h2 className="header">Welcome to User CRUD App</h2>
+          </div>
+          <div className="header-container">
+            <button onClick={deleteHistory}>Delete Everythig</button>
+          </div>
+        </>
+      ),
     },
     {
       path: "/users",
