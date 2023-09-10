@@ -6,6 +6,8 @@ import UserList from "../../components/user/UserList";
 import UpdateUser from "../../components/user/UpdateUser";
 import FindUser from "../../components/user/FindUser";
 import DeleteUser from "../../components/user/DeleteUser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const navBar = [
   {
@@ -48,6 +50,7 @@ const Layout = () => (
 
 const UserWrapper = () => {
   const [users, setUsers] = useState([]);
+  const [indexToUpdate, setIndexToUpdate] = useState(-1);
 
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem("users"));
@@ -57,7 +60,7 @@ const UserWrapper = () => {
   }, []);
 
   const addUser = (newUser) => {
-    // Update the state with the newTodo
+    // Update the state with the newUser
     const updatedUsers = [...users, newUser];
     setUsers(updatedUsers);
 
@@ -85,11 +88,17 @@ const UserWrapper = () => {
     return null;
   };
 
-  const updateUser = (userToBeUpdated) => {
-    const indexToUpdate = users.findIndex(
-      (user) => user.id === userToBeUpdated.id
-    );
+  //it serves the purpose of saving the index for userToBeUpdated (indexToUpdate)
+  const findUserForUpdate = (id) => {
+    const indexToFind = users.findIndex((user) => user.id === id);
+    if (indexToFind !== -1) {
+      setIndexToUpdate(indexToFind);
+      return users[indexToFind];
+    }
+    return null;
+  };
 
+  const updateUser = (userToBeUpdated) => {
     if (indexToUpdate !== -1) {
       users[indexToUpdate] = userToBeUpdated;
       const updatedUsers = [...users];
@@ -124,7 +133,9 @@ const UserWrapper = () => {
     },
     {
       path: "user/update",
-      element: <UpdateUser onUpdateUser={updateUser} findUser={findUser} />,
+      element: (
+        <UpdateUser onUpdateUser={updateUser} findUser={findUserForUpdate} />
+      ),
     },
     {
       path: "user/find",

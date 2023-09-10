@@ -1,21 +1,26 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DeleteUser = ({ onDeleteUser, findUser }) => {
   const [userId, setUserId] = useState("");
-  const [userFound, setUserFound] = useState(false);
 
   const handleDelete = () => {
     const resultentUser = findUser(userId);
     if (resultentUser != null) {
       onDeleteUser(userId);
-      setUserFound(!userFound);
-      alert("User Deteled!");
-    } else alert("User Not Found");
+      setUserId("");
+      toast.success("User Deleted!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else
+      toast.error("User not Found!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
   };
-  return userFound ? (
-    <div>User Deleted!</div>
-  ) : (
+  return (
     <>
+      <ToastContainer />
       <div className="header-container">
         <h2 className="header">Find User with ID to be Deleted</h2>
       </div>
@@ -25,6 +30,7 @@ const DeleteUser = ({ onDeleteUser, findUser }) => {
           <input
             type="text"
             name="userId"
+            value={userId}
             onChange={(e) => setUserId(e.target.value)}
           />
           <button onClick={handleDelete}>Delete</button>

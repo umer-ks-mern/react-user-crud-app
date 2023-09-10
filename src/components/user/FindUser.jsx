@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../../App.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FindUser = ({ findUser }) => {
   const [userData, setUserData] = useState({
@@ -22,7 +23,10 @@ const FindUser = ({ findUser }) => {
         age: resultentUser.age,
         email: resultentUser.email,
       });
-    } else alert("User Not Found");
+    } else
+      toast.error("User not Found!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
   };
 
   return userFound ? (
@@ -34,6 +38,7 @@ const FindUser = ({ findUser }) => {
     </div>
   ) : (
     <>
+      <ToastContainer />
       <div className="header-container">
         <h2 className="header">Find User with ID</h2>
       </div>

@@ -1,8 +1,10 @@
 import "../../App.css";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateUser = ({ onCreateUser }) => {
-  const [UserData, setUserData] = useState({
+  const [userData, setUserData] = useState({
     id: "",
     name: "",
     age: 0,
@@ -11,25 +13,31 @@ const CreateUser = ({ onCreateUser }) => {
 
   const addClick = () => {
     if (
-      UserData.name === "" ||
-      UserData.id === "" ||
-      isNaN(UserData.age) ||
-      UserData.email === ""
+      userData.name === "" ||
+      userData.id === "" ||
+      isNaN(userData.age) ||
+      userData.email === ""
     ) {
-      alert("All Fields are Required!!");
+      toast.error("All Fields are Required!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
-    onCreateUser(UserData);
+    onCreateUser(userData);
     setUserData({
       id: "",
       name: "",
       age: 0,
       email: "",
     });
+    toast.success("User Created", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   return (
     <div>
+      <ToastContainer />
       <div className="header-container">
         <h2 className="header">Create User</h2>
       </div>
@@ -38,40 +46,40 @@ const CreateUser = ({ onCreateUser }) => {
           <label htmlFor="id">ID:</label>
           <input
             onChange={(e) => {
-              setUserData({ ...UserData, id: e.target.value });
+              setUserData({ ...userData, id: e.target.value });
             }}
             type="text"
             id="userId"
             name="name"
-            value={UserData.id}
+            value={userData.id}
           />
           <label htmlFor="name">Name:</label>
           <input
             onChange={(e) => {
-              setUserData({ ...UserData, name: e.target.value });
+              setUserData({ ...userData, name: e.target.value });
             }}
             type="text"
             id="userName"
             name="name"
-            value={UserData.name}
+            value={userData.name}
           />
           <label htmlFor="age">Age:</label>
           <input
             onChange={(e) => {
-              setUserData({ ...UserData, age: e.target.value });
+              setUserData({ ...userData, age: e.target.value });
             }}
             type="number"
             name="age"
             id="UserAge"
-            value={UserData.age}
+            value={userData.age}
           ></input>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             name="userEmail"
-            value={UserData.email}
+            value={userData.email}
             onChange={(e) => {
-              setUserData({ ...UserData, email: e.target.value });
+              setUserData({ ...userData, email: e.target.value });
             }}
           />
           <button onClick={addClick}>Create User</button>
